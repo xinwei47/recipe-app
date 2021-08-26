@@ -1,0 +1,33 @@
+.advanced-search {
+    background-color: lightcoral;
+    margin-top: $margin-lg;
+    padding: $padding-md;
+    width: 60%;
+    &__label {
+        font-size: 2rem;
+        font-weight: 600;
+    }
+    &__ingredients {
+        display: flex;
+    }
+
+    &__ingredients-input {
+        flex: 1;
+        margin-left: $margin-sm;
+    }
+    &__nutrition {
+        background-color: lightskyblue;
+        display: grid;
+        margin-top: $margin-lg;
+        grid-template-columns: min-content repeat(2, 1fr);
+        gap: $grid-gap-xs;
+    }
+    &__min,
+    &__max {
+        justify-self: center;
+    }
+
+    &__min {
+        grid-column: 2/3;
+    }
+}

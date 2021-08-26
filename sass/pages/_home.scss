@@ -1,0 +1,20 @@
+.container {
+    max-width: 114rem;
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    column-gap: $grid-gap-md;
+}
+
+.results {
+    grid-column: 1/2;
+}
+
+.recipe {
+    grid-column: 2/3;
+}
+
+.search {
+    &__toggle {
+        display: block;
+    }
+}

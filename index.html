@@ -5,22 +5,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <title>Document</title>
 </head>
 
 <body>
-    <h1>Recipe App</h1>
-    <div class="search">
-        <input type="text" class="search__input" id="search-input">
+    <h1 class="heading--1">Recipe App</h1>
+    <!-- search box -->
+    <div class="search center-content--column">
+        <input type="text" class="search__input" id="search-input" placeholder="Search recipes">
+        <a href="#" class="search__advanced-toggle">Advanced Search</a>
+
+        <!-- advanced search -->
+        <div class="advanced-search hidden">
+            <div class="advanced-search__ingredients">
+                <label for="ingredients" class="advanced-search__label">Ingredients</label>
+                <input type="text" class="advanced-search__ingredients-input" id="ingredients">
+            </div>
+            <div class="advanced-search__nutrition">
+                <p class="advanced-search__label advanced-search__min">min</p>
+                <p class="advanced-search__label advanced-search__max">max</p>
+                <p class="advanced-search__label">Fat</p>
+                <input type="text" class="advanced-search__ingredients advanced-search__fat" id="min-fat">
+                <input type="text" class="advanced-search__ingredients advanced-search__fat" id="max-fat">
+                <p class="advanced-search__label">Calories</p>
+                <input type="text" class="advanced-search__ingredients advanced-search__cal" id="min-cal">
+                <input type="text" class="advanced-search__ingredients advanced-search__cal" id="max-cal">
+                <p class="advanced-search__label">Carbs</p>
+                <input type="text" class="advanced-search__ingredients advanced-search__carbs" id="min-carbs">
+                <input type="text" class="advanced-search__ingredients advanced-search__carbs" id="max-carbs">
+                <p class="advanced-search__label">Protein</p>
+                <input type="text" class="advanced-search__ingredients advanced-search__protein" id="min-protein">
+                <input type="text" class="advanced-search__ingredients advanced-search__protein" id="max-protein">
+            </div>
+        </div>
         <input type="submit" value="Search" class="search__btn">
     </div>
 
-    <div class="results__container">
-        <ul class="results__list">
+    <!-- display content -->
+    <div class="container">
+        <!-- display search results -->
+        <div class="results"></div>
 
-        </ul>
+        <!-- display selected recipe details -->
+        <div class="recipe"></div>
+
     </div>
+
 
     <script src="app.js"></script>
 </body>

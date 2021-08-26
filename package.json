@@ -1,8 +1,9 @@
 {
   "name": "portfolio-project-recipe-app-new",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "watch:sass": "sass sass/main.scss css/style.css -w",
     "start": "npm-run-all --parallel watch:sass",
@@ -15,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "autoprefixer": "^10.3.2",
+    "chart.js": "^3.5.1",
     "concat": "^1.0.3",
     "npm-run-all": "^4.1.5",
     "postcss-cli": "^8.3.1",
