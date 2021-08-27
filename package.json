@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "watch:sass": "sass sass/main.scss css/style.css -w",
     "start": "npm-run-all --parallel watch:sass",

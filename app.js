@@ -65,7 +65,8 @@ const displayResults = (results) => {
         const nutritionArr = result.nutrition.nutrients;
         const resultItem = document.createElement('li');
         resultItem.classList.add('result__card');
-        const nutritionValueArr = nutritionValueLookup(nutritionArr);
+        const requiredNutritionArr = filterArr(nutritionArr, ['Calories', 'Fat', 'Carbohydrates', 'Protein'], 'name');
+        console.log(requiredNutritionArr);
 
         resultItem.innerHTML = `
         <a href="#" class="result__link">
@@ -74,17 +75,17 @@ const displayResults = (results) => {
             </div>
             <div class="result__content">
                 <h4 class="result__title">${result.title}</h4>
-                <ul class="result__nutrition-overview">
-                    <li class="result__protein">${nutritionValueArr[3].name}: ${nutritionValueArr[3].amount}${nutritionValueArr[3].unit}</li>
-                    <li class="result__cal">${nutritionValueArr[0].name}: ${nutritionValueArr[0].amount}${nutritionValueArr[0].unit}</li>
-                    <li class="result__carbs">${nutritionValueArr[2].name}: ${nutritionValueArr[2].amount}${nutritionValueArr[2].unit}</li>
-                    <li class="result__fat">${nutritionValueArr[1].name}: ${nutritionValueArr[1].amount}${nutritionValueArr[1].unit}</li>
-                </ul>
+                <ul class="result__nutrition-overview"></ul>
             </div>
         </a>
         `
-
         searchResultsContainer.append(resultItem);
+
+        // print nutrition summary list
+        // need to use "resultItem" rather than "document" to select the corresponding ".result__nutrition-overview" element
+        const nutritionOverview = resultItem.querySelector('.result__nutrition-overview');
+        const nutritionList = printResults(requiredNutritionArr);
+        nutritionList.forEach(item => nutritionOverview.append(item));
 
         resultItem.addEventListener('click', () => {
             recipeDetails(result)
@@ -93,16 +94,23 @@ const displayResults = (results) => {
 }
 
 // filter out unneeded nutrition items
-const nutritionValueLookup = nutritionArr => {
-    return nutritionArr.filter(item => {
-        return ['Calories', 'Fat', 'Carbohydrates', 'Protein'].includes(item.name);
+const filterArr = (lookupArr, lookupValueArr = [], lookupKey) => {
+    return lookupArr.filter(item => {
+        return lookupValueArr.includes(item[lookupKey]);
     })
 }
 
+// print nutrition lists
+const printResults = (arr) => {
+    return arr.map((item) => {
+        const list = document.createElement('li');
+        list.innerHTML = `<li>${item.name}: ${item.amount}${item.unit}</li>`;
+        return list;
+    })
+}
 
 // search result card is clickable to show recipe details
 const recipeContainer = document.querySelector('.recipe');
-
 const recipeDetails = recipe => {
     const recipeHeading = document.createElement('div');
     recipeHeading.classList.add('recipe__heading');
@@ -116,8 +124,24 @@ const recipeDetails = recipe => {
                 <img src="${recipe.image}" alt="" class="recipe__img">
             </div>
             <h2 class="recipe__name heading--2">${recipe.title}</h2>
+            <p class="recipe__summary">${recipe.summary}</p>
+            <div class="recipe__stats-container">
+                <div class="recipe__stats">
+                    <h4 class="recipe__stats-heading heading--4">Servings</h4>
+                    <p class="recipe__servings">${recipe.servings}</p>
+                </div>
+                <div class="recipe__stats">
+                    <h4 class="recipe__stats-heading heading--4">Cooking Time (min)</h4>
+                    <p class="recipe__cooking-time">${recipe.readyInMinutes}</p>
+                </div>
+                <div class="recipe__stats">
+                    <h4 class="recipe__stats-heading heading--4">Healthy Score</h4>
+                    <p class="recipe__health-score">${recipe.healthScore}</p>
+                </div>
+            </div>
         </div>`
     recipeContainer.append(recipeHeading)
+
 
     showIngredients(recipe);
     showInstructions(recipe);
