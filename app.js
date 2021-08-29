@@ -1,8 +1,6 @@
-const apiKey = 'dffc37a9c2f84d2099cc90956a95cbcd';
-
 // advanced search button to toggle the additional criteria
 const advancedToggle = document.querySelector('.search__advanced-toggle');
-const advancedSearchBlock = document.querySelector('.advanced-search');
+const advancedSearchBlock = document.querySelector('.search__advanced');
 
 advancedToggle.addEventListener('click', () => {
     advancedSearchBlock.classList.toggle('hidden');
@@ -58,7 +56,7 @@ const clearContainer = container => {
 // display search results on left sidebar
 // search result display as a card
 const displayResults = (results) => {
-    const searchResultsContainer = document.querySelector('.results')
+    const searchResultsContainer = document.querySelector('.search-results')
     clearContainer(searchResultsContainer);
 
     results.forEach(result => {

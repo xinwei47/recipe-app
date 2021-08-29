@@ -15,49 +15,61 @@
 </head>
 
 <body>
-    <h1 class="heading--1">Recipe App</h1>
-    <!-- search box -->
-    <div class="search center-content--column">
-        <input type="text" class="search__input" id="search-input" placeholder="Search recipes">
-        <a href="#" class="search__advanced-toggle">Advanced Search</a>
-
-        <!-- advanced search -->
-        <div class="advanced-search hidden">
-            <div class="advanced-search__ingredients">
-                <label for="ingredients" class="advanced-search__label">Ingredients</label>
-                <input type="text" class="advanced-search__ingredients-input" id="ingredients">
-            </div>
-            <div class="advanced-search__nutrition">
-                <p class="advanced-search__label advanced-search__min">min</p>
-                <p class="advanced-search__label advanced-search__max">max</p>
-                <p class="advanced-search__label">Fat</p>
-                <input type="text" class="advanced-search__ingredients advanced-search__fat" id="min-fat">
-                <input type="text" class="advanced-search__ingredients advanced-search__fat" id="max-fat">
-                <p class="advanced-search__label">Calories</p>
-                <input type="text" class="advanced-search__ingredients advanced-search__cal" id="min-cal">
-                <input type="text" class="advanced-search__ingredients advanced-search__cal" id="max-cal">
-                <p class="advanced-search__label">Carbs</p>
-                <input type="text" class="advanced-search__ingredients advanced-search__carbs" id="min-carbs">
-                <input type="text" class="advanced-search__ingredients advanced-search__carbs" id="max-carbs">
-                <p class="advanced-search__label">Protein</p>
-                <input type="text" class="advanced-search__ingredients advanced-search__protein" id="min-protein">
-                <input type="text" class="advanced-search__ingredients advanced-search__protein" id="max-protein">
-            </div>
+    <div class="head-container">
+        <div class="app-text">
+            <h1 class="app-text__heading heading--1">Eat Healthy<span class="app-text__period">.</span><br>Live
+                Well<span class="app-text__period">.</span></h1>
+            <h4 class="app-text__intro heading--4">We provide homemade, simple, & delicious plant-based recipes are
+                designed to provide your body & mind with great fuel for great performance. Enjoy our creations in good
+                health!</h4>
         </div>
-        <input type="submit" value="Search" class="search__btn">
+
+        <!-- search box -->
+        <div class="search center-content--column">
+            <div class="search__basic">
+                <input type="text" class="search__input" id="search-input" placeholder="Search recipes">
+                <a href="#" class="search__advanced-toggle center-element">Advanced Search</a>
+            </div>
+
+            <!-- search -->
+            <div class="search__advanced hidden">
+                <div class="search__ingredients">
+                    <label for="ingredients" class="search__label">Ingredients</label>
+                    <input type="text" class="search__ingredients-input" id="ingredients">
+                </div>
+                <div class="search__nutrition">
+                    <p class="search__label search__min">min</p>
+                    <p class="search__label search__max">max</p>
+                    <p class="search__label">Fat</p>
+                    <input type="text" class="search__ingredients search__fat" id="min-fat">
+                    <input type="text" class="search__ingredients search__fat" id="max-fat">
+                    <p class="search__label">Calories</p>
+                    <input type="text" class="search__ingredients search__cal" id="min-cal">
+                    <input type="text" class="search__ingredients search__cal" id="max-cal">
+                    <p class="search__label">Carbs</p>
+                    <input type="text" class="search__ingredients search__carbs" id="min-carbs">
+                    <input type="text" class="search__ingredients search__carbs" id="max-carbs">
+                    <p class="search__label">Protein</p>
+                    <input type="text" class="search__ingredients search__protein" id="min-protein">
+                    <input type="text" class="search__ingredients search__protein" id="max-protein">
+                </div>
+            </div>
+
+            <input type="submit" value="Search" class="search__btn btn-primary">
+        </div>
     </div>
 
     <!-- display content -->
-    <div class="container">
+    <div class="results-container">
         <!-- display search results -->
-        <div class="results"></div>
+        <div class="search-results"></div>
 
         <!-- display selected recipe details -->
         <div class="recipe"></div>
 
     </div>
 
-
+    <script src="apikey.js"></script>
     <script type="text/javascript" src="app.js"></script>
 </body>
 
