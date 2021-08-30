@@ -1,26 +1,30 @@
 .search {
-    &__basic {
-        width: 100%;
-    }
     &__input {
         font: inherit;
         padding: $padding-xs;
         padding-left: $padding-sm;
         width: 100%;
         border-radius: $border-radius-sm;
-        box-shadow: $box-shadow;
         border: none;
         border-bottom: 3px solid transparent;
-
+        
         &::placeholder {
-            font-size: 2rem;
+            font-size: 1.6rem;
             transform: translateY(1.5px);
         }
-
+        
         &:focus {
             outline: none;
             border-bottom: 3px solid $color-highlight;
         }
+    }
+    
+    &__basic-input {
+        box-shadow: $box-shadow;
+    }
+
+    &__basic {
+        width: 100%;
     }
 
     &__advanced-toggle {
@@ -46,36 +50,65 @@
 
     // advanced search box
     &__advanced {
-        background-color: lightcoral;
-        margin-top: $margin-lg;
+        background-color: $color-white;
+        border-radius: $border-radius-sm;
+        margin-top: $margin-sm;
         padding: $padding-md;
-        width: 80%;
+        width: 100%;
+
+        display: grid;
+        grid-template-columns: min-content repeat(2, 1fr);
+        align-items: center;
+        gap: $grid-gap-xs;
+
+        position: relative;
+
     }
     &__label {
-        font-size: 2rem;
+        font-size: 1.6rem;
         font-weight: 600;
     }
-    &__ingredients {
-        display: flex;
+
+    &__advanced-input {
+        box-shadow: $box-shadow-2;
     }
 
     &__ingredients-input {
-        flex: 1;
-        margin-left: $margin-sm;
+        grid-column: 2/4;
     }
-    &__nutrition {
-        background-color: lightskyblue;
-        display: grid;
-        margin-top: $margin-lg;
-        grid-template-columns: min-content repeat(2, 1fr);
-        gap: $grid-gap-xs;
-    }
-    &__min,
-    &__max {
+    
+    &__column{
+        margin-top: $margin-md;
         justify-self: center;
     }
 
-    &__min {
+    &__column--min {
         grid-column: 2/3;
     }
+
+    &__label-icon {
+        color: rgba($color-black, 0.5);
+    }
+
+    &__annotation-box {
+        background-color: rgba($color-secondary, .5);
+        
+        padding: $padding-xxs $padding-xs;
+        position: absolute;
+        top: 23%;
+        max-width: 80%;
+        
+        &--min {
+            left: 10%;
+        }
+        
+        &--max {
+            right: 10%;
+        }
+    }
+
+    &__annotation {
+        font-size: 1.4rem;
+    }
+
 }

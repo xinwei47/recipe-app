@@ -6,6 +6,29 @@ advancedToggle.addEventListener('click', () => {
     advancedSearchBlock.classList.toggle('hidden');
 })
 
+// toggle min and max icon to show annotation
+const annotationIconMin = document.querySelector('.search__label-icon--min');
+const annotationMin = document.querySelector('.search__annotation-box--min');
+annotationIconMin.addEventListener('click', () => {
+    annotationMin.classList.toggle('hidden');
+})
+
+const annotationIconMax = document.querySelector('.search__label-icon--max');
+const annotationMax = document.querySelector('.search__annotation-box--max');
+annotationIconMax.addEventListener('click', () => {
+    annotationMax.classList.toggle('hidden');
+})
+
+// close the annotation when clicking outside the box
+// const annotationBox = document.querySelector('.search__annotation-box');
+// const searchColumnMin = document.querySelector('.search__column--min')
+// document.addEventListener('click', (event) => {
+//     if (!searchColumnMin.contains(event.target) && !annotationBox.classList.contains('.hidden')) {
+//         annotationBox.classList.add('hidden')
+//     }
+// })
+
+
 // fetch basic search and advanced search results, including nutrition information
 const fetchResults = async () => {
 

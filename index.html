@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +16,7 @@
     <title>Document</title>
 </head>
 
-<body>
+<body class="center-content--column">
     <div class="head-container">
         <div class="app-text">
             <h1 class="app-text__heading heading--1">Eat Healthy<span class="app-text__period">.</span><br>Live
@@ -27,32 +29,48 @@
         <!-- search box -->
         <div class="search center-content--column">
             <div class="search__basic">
-                <input type="text" class="search__input" id="search-input" placeholder="Search recipes">
+                <input type="text" class="search__input search__basic-input" id="search-input"
+                    placeholder="Search recipes">
                 <a href="#" class="search__advanced-toggle center-element">Advanced Search</a>
             </div>
 
-            <!-- search -->
+            <!-- advanced search -->
             <div class="search__advanced hidden">
-                <div class="search__ingredients">
-                    <label for="ingredients" class="search__label">Ingredients</label>
-                    <input type="text" class="search__ingredients-input" id="ingredients">
+                <label for="ingredients" class="search__label">Ingredients</label>
+                <input type="text" class="search__input search__advanced-input search__ingredients-input"
+                    id="ingredients" placeholder="Seperate ingredients by comma">
+
+                <div class="search__column search__column--min">
+                    <p class="search__label search__min">Min <sup><i
+                                class="search__label-icon search__label-icon--min fas fa-question-circle"></i></sup></p>
+                    <div class="search__annotation-box search__annotation-box--min center-element hidden">
+                        <p class="search__annotation search__annotation--min">The minimum amount of nutrition in grams
+                            the recipe must have.
+                        </p>
+                    </div>
                 </div>
-                <div class="search__nutrition">
-                    <p class="search__label search__min">min</p>
-                    <p class="search__label search__max">max</p>
-                    <p class="search__label">Fat</p>
-                    <input type="text" class="search__ingredients search__fat" id="min-fat">
-                    <input type="text" class="search__ingredients search__fat" id="max-fat">
-                    <p class="search__label">Calories</p>
-                    <input type="text" class="search__ingredients search__cal" id="min-cal">
-                    <input type="text" class="search__ingredients search__cal" id="max-cal">
-                    <p class="search__label">Carbs</p>
-                    <input type="text" class="search__ingredients search__carbs" id="min-carbs">
-                    <input type="text" class="search__ingredients search__carbs" id="max-carbs">
-                    <p class="search__label">Protein</p>
-                    <input type="text" class="search__ingredients search__protein" id="min-protein">
-                    <input type="text" class="search__ingredients search__protein" id="max-protein">
+                <div class="search__column search__column--max">
+                    <p class="search__label search__max">Max <sup><i
+                                class="search__label-icon search__label-icon--max fas fa-question-circle"></i></sup></p>
+                    <div class="search__annotation-box search__annotation-box--max center-element hidden">
+                        <p class="search__annotation search__annotation--max">The maximum amount of nutrition in grams
+                            the recipe can have.
+                        </p>
+                    </div>
                 </div>
+
+                <p class="search__label">Fat</p>
+                <input type="text" class="search__input search__advanced-input" id="min-fat">
+                <input type="text" class="search__input search__advanced-input" id="max-fat">
+                <p class="search__label">Calories</p>
+                <input type="text" class="search__input search__advanced-input" id="min-cal">
+                <input type="text" class="search__input search__advanced-input" id="max-cal">
+                <p class="search__label">Carbs</p>
+                <input type="text" class="search__input search__advanced-input" id="min-carbs">
+                <input type="text" class="search__input search__advanced-input" id="max-carbs">
+                <p class="search__label">Protein</p>
+                <input type="text" class="search__input search__advanced-input" id="min-protein">
+                <input type="text" class="search__input search__advanced-input" id="max-protein">
             </div>
 
             <input type="submit" value="Search" class="search__btn btn-primary">
