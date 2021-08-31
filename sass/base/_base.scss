@@ -15,7 +15,10 @@ body {
     box-sizing: border-box;
     min-height: 100%;
     padding: $padding-lg;
-    // position: relative;
-    background: linear-gradient(45deg, $color-primary, $color-secondary);
-    
+    background-color: $color-white;
+    position: relative;
+
+    &__layout--navi {
+        background-color: $color-white;
+    }
 }

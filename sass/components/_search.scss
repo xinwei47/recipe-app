@@ -7,18 +7,18 @@
         border-radius: $border-radius-sm;
         border: none;
         border-bottom: 3px solid transparent;
-        
+
         &::placeholder {
             font-size: 1.6rem;
             transform: translateY(1.5px);
         }
-        
+
         &:focus {
             outline: none;
             border-bottom: 3px solid $color-highlight;
         }
     }
-    
+
     &__basic-input {
         box-shadow: $box-shadow;
     }
@@ -42,10 +42,21 @@
             color: $color-highlight;
             text-decoration: underline;
         }
+
+        &--navi {
+            margin-top: 1rem !important;
+        }
     }
 
     &__btn {
         margin-top: $margin-md;
+
+        &--navi {
+            grid-row: 1/2;
+            grid-column: 2/3;
+            margin-top: 0;
+            margin-left: $margin-md;
+        }
     }
 
     // advanced search box
@@ -63,6 +74,9 @@
 
         position: relative;
 
+        &--navi {
+            grid-column: 1/4;
+        }
     }
     &__label {
         font-size: 1.6rem;
@@ -76,8 +90,8 @@
     &__ingredients-input {
         grid-column: 2/4;
     }
-    
-    &__column{
+
+    &__column {
         margin-top: $margin-md;
         justify-self: center;
     }
@@ -91,17 +105,17 @@
     }
 
     &__annotation-box {
-        background-color: rgba($color-secondary, .5);
-        
+        background-color: rgba($color-secondary, 0.5);
+
         padding: $padding-xxs $padding-xs;
         position: absolute;
         top: 23%;
         max-width: 80%;
-        
+
         &--min {
             left: 10%;
         }
-        
+
         &--max {
             right: 10%;
         }
@@ -111,4 +125,9 @@
         font-size: 1.4rem;
     }
 
+    &--navi {
+        display: grid;
+        grid-template-columns: 1fr min-content;
+        align-items: start;
+    }
 }

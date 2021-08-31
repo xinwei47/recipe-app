@@ -1,0 +1,53 @@
+.card {
+    background-color: rgba($color-primary, 0.2);
+    padding: $padding-xs;
+
+    list-style: none;
+    &__link {
+        &,
+        &:link,
+        &:active {
+            color: $color-black;
+            display: grid;
+            grid-template-columns: min-content 1fr;
+            column-gap: $grid-gap-xs;
+            align-items: center;
+        }
+
+        text-decoration: none;
+    }
+
+    &__img-container {
+        width: 10rem;
+        height: 10rem;
+        overflow: hidden;
+    }
+
+    &__img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    &__content {
+    }
+    &__title {
+        font-size: 2rem;
+    }
+
+    &__nutrition-overview {
+        margin-top: 1rem;
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(2, max-content);
+        column-gap: $grid-gap-xs;
+        row-gap: $grid-gap-xs;
+    }
+    &__nutrition-item {
+        font-size: 1.2rem;
+    }
+
+    &:not(:last-of-type) {
+        margin-bottom: $margin-sm;
+    }
+}

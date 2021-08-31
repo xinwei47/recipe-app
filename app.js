@@ -1,32 +1,37 @@
+// function to hide element
+const toggleClass = (element, className = '') => element.classList.toggle(className);
+const addClass = (element, className = '') => element.classList.add(className);
+const removeClass = (element, className = '') => element.classList.remove(className);
+
 // advanced search button to toggle the additional criteria
 const advancedToggle = document.querySelector('.search__advanced-toggle');
 const advancedSearchBlock = document.querySelector('.search__advanced');
 
-advancedToggle.addEventListener('click', () => {
-    advancedSearchBlock.classList.toggle('hidden');
-})
+advancedToggle.addEventListener('click', () => toggleClass(advancedSearchBlock, 'hidden'));
 
 // toggle min and max icon to show annotation
 const annotationIconMin = document.querySelector('.search__label-icon--min');
 const annotationMin = document.querySelector('.search__annotation-box--min');
-annotationIconMin.addEventListener('click', () => {
-    annotationMin.classList.toggle('hidden');
-})
+annotationIconMin.addEventListener('click', () => toggleClass(annotationMin, 'hidden'));
 
 const annotationIconMax = document.querySelector('.search__label-icon--max');
 const annotationMax = document.querySelector('.search__annotation-box--max');
-annotationIconMax.addEventListener('click', () => {
-    annotationMax.classList.toggle('hidden');
-})
+annotationIconMax.addEventListener('click', () => toggleClass(annotationMax, 'hidden'));
 
 // close the annotation when clicking outside the box
-// const annotationBox = document.querySelector('.search__annotation-box');
-// const searchColumnMin = document.querySelector('.search__column--min')
-// document.addEventListener('click', (event) => {
-//     if (!searchColumnMin.contains(event.target) && !annotationBox.classList.contains('.hidden')) {
-//         annotationBox.classList.add('hidden')
-//     }
-// })
+const annotationBoxMin = document.querySelector('.search__annotation-box--min');
+const annotationBoxMax = document.querySelector('.search__annotation-box--max');
+const searchColumnMin = document.querySelector('.search__column--min')
+const searchColumnMax = document.querySelector('.search__column--max')
+
+const closeAnnotation = (event, elementWrapper, element) => {
+    if (!elementWrapper.contains(event.target)) {
+        element.classList.add('hidden')
+    }
+}
+
+document.addEventListener('click', (event) => closeAnnotation(event, searchColumnMin, annotationBoxMin));
+document.addEventListener('click', (event) => closeAnnotation(event, searchColumnMax, annotationBoxMax));
 
 
 // fetch basic search and advanced search results, including nutrition information
@@ -58,7 +63,8 @@ const fetchResults = async () => {
                 ...(minProtein ? { minProtein } : {}),
                 ...(maxProtein ? { maxProtein } : {}),
                 addRecipeNutrition: true,
-                instructionsRequired: true
+                instructionsRequired: true,
+                number: 50
             }
         })
         console.log(response.data.results);
@@ -81,30 +87,31 @@ const clearContainer = container => {
 const displayResults = (results) => {
     const searchResultsContainer = document.querySelector('.search-results')
     clearContainer(searchResultsContainer);
+    clearContainer(recipeContainer);
 
     results.forEach(result => {
         const nutritionArr = result.nutrition.nutrients;
         const resultItem = document.createElement('li');
-        resultItem.classList.add('result__card');
+        resultItem.classList.add('card');
         const requiredNutritionArr = filterArr(nutritionArr, ['Calories', 'Fat', 'Carbohydrates', 'Protein'], 'name');
-        console.log(requiredNutritionArr);
+        // console.log(requiredNutritionArr);
 
         resultItem.innerHTML = `
-        <a href="#" class="result__link">
-            <div class="result__img-container">
-                <img src="${result.image}" alt="" class="result__img">
+        <a href="#" class="card__link">
+            <div class="card__img-container">
+                <img src="${result.image}" alt="" class="card__img">
             </div>
-            <div class="result__content">
-                <h4 class="result__title">${result.title}</h4>
-                <ul class="result__nutrition-overview"></ul>
+            <div class="card__content">
+                <h4 class="card__title">${result.title}</h4>
+                <ul class="card__nutrition-overview"></ul>
             </div>
         </a>
         `
         searchResultsContainer.append(resultItem);
 
         // print nutrition summary list
-        // need to use "resultItem" rather than "document" to select the corresponding ".result__nutrition-overview" element
-        const nutritionOverview = resultItem.querySelector('.result__nutrition-overview');
+        // need to use "resultItem" rather than "document" to select the corresponding ".card__nutrition-overview" element
+        const nutritionOverview = resultItem.querySelector('.card__nutrition-overview');
         const nutritionList = printResults(requiredNutritionArr);
         nutritionList.forEach(item => nutritionOverview.append(item));
 
@@ -125,40 +132,46 @@ const filterArr = (lookupArr, lookupValueArr = [], lookupKey) => {
 const printResults = (arr) => {
     return arr.map((item) => {
         const list = document.createElement('li');
-        list.innerHTML = `<li>${item.name}: ${item.amount}${item.unit}</li>`;
+        list.classList.add('card__nutrition-item');
+        list.innerHTML = `<b>${item.name}</b>: ${item.amount}${item.unit}`;
         return list;
     })
 }
 
+// resize the recipe image
+const imgResize = (url) => url.replace(/\d{1,3}x\d{1,3}/, '636x393');
+
 // search result card is clickable to show recipe details
 const recipeContainer = document.querySelector('.recipe');
 const recipeDetails = recipe => {
+    clearContainer(recipeContainer);
+
     const recipeHeading = document.createElement('div');
     recipeHeading.classList.add('recipe__heading');
 
-    clearContainer(recipeContainer);
-
+    const imageUrl = imgResize(recipe.image);
     // render recipe heading
     recipeHeading.innerHTML =
-        `<div class="recipe__heading">
-            <div class="recipe__img-container">
-                <img src="${recipe.image}" alt="" class="recipe__img">
+        `<div class="recipe__img-container">
+            <img src="${imageUrl}" alt="" class="recipe__img">
+        </div>
+        <h2 class="recipe__name heading--2">${recipe.title}</h2>
+        <p class="recipe__summary">${recipe.summary}</p>
+        <div class="recipe__stats-container">
+            <div class="recipe__stats">
+                <p><i class="recipe__stats-icon fas fa-user"></i></p>
+                <h4 class="recipe__stats-heading heading--4">Servings</h4>
+                <p class="recipe__servings">${recipe.servings}</p>
             </div>
-            <h2 class="recipe__name heading--2">${recipe.title}</h2>
-            <p class="recipe__summary">${recipe.summary}</p>
-            <div class="recipe__stats-container">
-                <div class="recipe__stats">
-                    <h4 class="recipe__stats-heading heading--4">Servings</h4>
-                    <p class="recipe__servings">${recipe.servings}</p>
-                </div>
-                <div class="recipe__stats">
-                    <h4 class="recipe__stats-heading heading--4">Cooking Time (min)</h4>
-                    <p class="recipe__cooking-time">${recipe.readyInMinutes}</p>
-                </div>
-                <div class="recipe__stats">
-                    <h4 class="recipe__stats-heading heading--4">Healthy Score</h4>
-                    <p class="recipe__health-score">${recipe.healthScore}</p>
-                </div>
+            <div class="recipe__stats">
+                <p><i class="recipe__stats-icon fas fa-clock"></i></p>
+                <h4 class="recipe__stats-heading heading--4">Cooking Time (min)</h4>
+                <p class="recipe__cooking-time">${recipe.readyInMinutes}</p>
+            </div>
+            <div class="recipe__stats">
+                <p><i class="recipe__stats-icon fas fa-star"></i></p>
+                <h4 class="recipe__stats-heading heading--4">Healthy Score</h4>
+                <p class="recipe__health-score">${recipe.healthScore}</p>
             </div>
         </div>`
     recipeContainer.append(recipeHeading)
@@ -241,6 +254,28 @@ const showTaste = async (recipeId) => {
     }
 }
 
+// search 
+const body = document.querySelector('body');
 const searchBtn = document.querySelector('.search__btn');
+const appHeading = document.querySelector('.app-text__heading');
+const appIntro = document.querySelector('.app-text__intro');
+const searchBlock = document.querySelector('.search');
+const headContainer = document.querySelector('.head-container');
+const searchAdvanced = document.querySelector('.search__advanced');
 
-searchBtn.addEventListener('click', fetchResults);
+searchBtn.addEventListener('click', () => {
+    fetchResults();
+    addClass(advancedSearchBlock, 'hidden');
+    removeClass(body, 'background-color')
+    addClass(appHeading, 'app-text__heading--navi')
+    addClass(appIntro, 'hidden');
+    addClass(headContainer, 'head-container--navi')
+    addClass(searchBlock, 'search--navi');
+    addClass(searchAdvanced, 'search__advanced--navi');
+    addClass(searchBtn, 'search__btn--navi');
+    addClass(advancedToggle, 'search__advanced-toggle--navi');
+
+
+});
+
+// trigger recipe fetch when users click on links in recipe summary
