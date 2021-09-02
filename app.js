@@ -1,100 +1,40 @@
-// function to hide element
-const toggleClass = (element, className = '') => element.classList.toggle(className);
-const addClass = (element, className = '') => element.classList.add(className);
-const removeClass = (element, className = '') => element.classList.remove(className);
+const body = document.querySelector('body');
+const resultsContainer = document.querySelector('.results-container');
+const searchResultsContainer = document.querySelector('.search-results');
+const recipeContainer = document.querySelector('.recipe');
+const searchBtn = document.querySelector('.search__btn');
+const appHeading = document.querySelector('.app-text__heading');
+const appIntro = document.querySelector('.app-text__intro');
+const searchBlock = document.querySelector('.search');
+const headContainer = document.querySelector('.head-container');
+const searchAdvanced = document.querySelector('.search__advanced');
+const hideSearchResults = document.querySelector('.hide')
+const hideIcon = document.querySelector('.hide__icon');
 
-// advanced search button to toggle the additional criteria
 const advancedToggle = document.querySelector('.search__advanced-toggle');
 const advancedSearchBlock = document.querySelector('.search__advanced');
-
-advancedToggle.addEventListener('click', () => toggleClass(advancedSearchBlock, 'hidden'));
-
-// toggle min and max icon to show annotation
 const annotationIconMin = document.querySelector('.search__label-icon--min');
 const annotationMin = document.querySelector('.search__annotation-box--min');
-annotationIconMin.addEventListener('click', () => toggleClass(annotationMin, 'hidden'));
-
 const annotationIconMax = document.querySelector('.search__label-icon--max');
 const annotationMax = document.querySelector('.search__annotation-box--max');
-annotationIconMax.addEventListener('click', () => toggleClass(annotationMax, 'hidden'));
-
-// close the annotation when clicking outside the box
 const annotationBoxMin = document.querySelector('.search__annotation-box--min');
 const annotationBoxMax = document.querySelector('.search__annotation-box--max');
 const searchColumnMin = document.querySelector('.search__column--min')
 const searchColumnMax = document.querySelector('.search__column--max')
 
-const closeAnnotation = (event, elementWrapper, element) => {
-    if (!elementWrapper.contains(event.target)) {
-        element.classList.add('hidden')
-    }
-}
-
-document.addEventListener('click', (event) => closeAnnotation(event, searchColumnMin, annotationBoxMin));
-document.addEventListener('click', (event) => closeAnnotation(event, searchColumnMax, annotationBoxMax));
-
-
-// fetch basic search and advanced search results, including nutrition information
-const fetchResults = async () => {
-
-    const searchTerm = document.querySelector('#search-input').value;
-    const ingredients = document.querySelector('#ingredients');
-    const minFat = parseFloat(document.querySelector('#min-fat').value);
-    const maxFat = parseFloat(document.querySelector('#max-fat').value);
-    const minCalories = parseFloat(document.querySelector('#min-cal').value);
-    const maxCalories = parseFloat(document.querySelector('#max-cal').value);
-    const minCarbs = parseFloat(document.querySelector('#min-carbs').value);
-    const maxCarbs = parseFloat(document.querySelector('#max-carbs').value);
-    const minProtein = parseFloat(document.querySelector('#min-protein').value);
-    const maxProtein = parseFloat(document.querySelector('#max-protein').value);
-
-    try {
-        const response = await axios.get('https://api.spoonacular.com/recipes/complexSearch', {
-            params: {
-                apiKey,
-                query: searchTerm,
-                includeIngredients: ingredients,
-                ...(minFat ? { minFat } : {}),
-                ...(maxFat ? { maxFat } : {}),
-                ...(minCalories ? { minCalories } : {}),
-                ...(maxCalories ? { maxCalories } : {}),
-                ...(minCarbs ? { minCarbs } : {}),
-                ...(maxCarbs ? { maxCarbs } : {}),
-                ...(minProtein ? { minProtein } : {}),
-                ...(maxProtein ? { maxProtein } : {}),
-                addRecipeNutrition: true,
-                instructionsRequired: true,
-                number: 50
-            }
-        })
-        console.log(response.data.results);
-        displayResults(response.data.results);
-    }
-    catch (err) {
-        console.log('Error:', err.message);
-    }
-}
-
-// clear container before displaying results
-const clearContainer = container => {
-    while (container.firstChild) {
-        container.removeChild(container.firstChild);
-    }
-}
-
+const loader = document.querySelector('.loader');
 // display search results on left sidebar
-// search result display as a card
+// each search result display as a card
 const displayResults = (results) => {
-    const searchResultsContainer = document.querySelector('.search-results')
+
     clearContainer(searchResultsContainer);
     clearContainer(recipeContainer);
 
     results.forEach(result => {
         const nutritionArr = result.nutrition.nutrients;
         const resultItem = document.createElement('li');
-        resultItem.classList.add('card');
+        addClass(resultItem, 'card');
         const requiredNutritionArr = filterArr(nutritionArr, ['Calories', 'Fat', 'Carbohydrates', 'Protein'], 'name');
-        // console.log(requiredNutritionArr);
 
         resultItem.innerHTML = `
         <a href="#" class="card__link">
@@ -102,12 +42,15 @@ const displayResults = (results) => {
                 <img src="${result.image}" alt="" class="card__img">
             </div>
             <div class="card__content">
-                <h4 class="card__title">${result.title}</h4>
+                <h5 class="card__title">${result.title}</h5>
                 <ul class="card__nutrition-overview"></ul>
             </div>
         </a>
         `
         searchResultsContainer.append(resultItem);
+
+        addClass(loader, 'hidden');
+        removeClass(hideSearchResults, 'hidden');
 
         // print nutrition summary list
         // need to use "resultItem" rather than "document" to select the corresponding ".card__nutrition-overview" element
@@ -115,39 +58,24 @@ const displayResults = (results) => {
         const nutritionList = printResults(requiredNutritionArr);
         nutritionList.forEach(item => nutritionOverview.append(item));
 
+        // resultItem.addEventListener('click', () => recipeDetails(result));
         resultItem.addEventListener('click', () => {
+            searchResultsContainer.childNodes.forEach(child => removeClass(child, 'selected'));
+            addClass(resultItem, 'selected')
             recipeDetails(result)
         });
     })
-}
 
-// filter out unneeded nutrition items
-const filterArr = (lookupArr, lookupValueArr = [], lookupKey) => {
-    return lookupArr.filter(item => {
-        return lookupValueArr.includes(item[lookupKey]);
-    })
+    recipeDetails(results[0]); // display the first recipe details from the search results
+    addClass(searchResultsContainer.firstChild, 'selected')
 }
-
-// print nutrition lists
-const printResults = (arr) => {
-    return arr.map((item) => {
-        const list = document.createElement('li');
-        list.classList.add('card__nutrition-item');
-        list.innerHTML = `<b>${item.name}</b>: ${item.amount}${item.unit}`;
-        return list;
-    })
-}
-
-// resize the recipe image
-const imgResize = (url) => url.replace(/\d{1,3}x\d{1,3}/, '636x393');
 
 // search result card is clickable to show recipe details
-const recipeContainer = document.querySelector('.recipe');
-const recipeDetails = recipe => {
+const recipeDetails = async (recipe) => {
     clearContainer(recipeContainer);
 
     const recipeHeading = document.createElement('div');
-    recipeHeading.classList.add('recipe__heading');
+    addClass(recipeHeading, 'recipe__heading');
 
     const imageUrl = imgResize(recipe.image);
     // render recipe heading
@@ -156,126 +84,67 @@ const recipeDetails = recipe => {
             <img src="${imageUrl}" alt="" class="recipe__img">
         </div>
         <h2 class="recipe__name heading--2">${recipe.title}</h2>
-        <p class="recipe__summary">${recipe.summary}</p>
+        <p class="recipe__summary">${recipe.summary ? recipe.summary : ''}</p>
         <div class="recipe__stats-container">
             <div class="recipe__stats">
                 <p><i class="recipe__stats-icon fas fa-user"></i></p>
                 <h4 class="recipe__stats-heading heading--4">Servings</h4>
-                <p class="recipe__servings">${recipe.servings}</p>
+                <p class="recipe__servings">${recipe.servings ? recipe.servings : 'N/A'}</p>
             </div>
             <div class="recipe__stats">
                 <p><i class="recipe__stats-icon fas fa-clock"></i></p>
-                <h4 class="recipe__stats-heading heading--4">Cooking Time (min)</h4>
-                <p class="recipe__cooking-time">${recipe.readyInMinutes}</p>
+                <h4 class="recipe__stats-heading heading--4">Cooking Time</h4>
+                <p class="recipe__cooking-time">${recipe.readyInMinutes ? recipe.readyInMinutes : 'N/A'}min</p>
             </div>
             <div class="recipe__stats">
                 <p><i class="recipe__stats-icon fas fa-star"></i></p>
                 <h4 class="recipe__stats-heading heading--4">Healthy Score</h4>
-                <p class="recipe__health-score">${recipe.healthScore}</p>
+                <p class="recipe__health-score">${recipe.healthScore ? recipe.healthScore : 'N/A'}</p>
             </div>
         </div>`
     recipeContainer.append(recipeHeading)
 
+    // insert link to recipe summary links
+    const summaryLinks = document.querySelectorAll('.recipe__summary a');
+    fetchSummaryLinks(summaryLinks);
 
     showIngredients(recipe);
     showInstructions(recipe);
-    showTaste(recipe.id);
+    await showTaste(recipe.id);
+    await showNutritions(recipe.id)
 }
 
-
-// fetch recipe ingredients data
-const showIngredients = recipe => {
-    const ingredientsContainer = document.createElement('div');
-    ingredientsContainer.classList.add('recipe__ingredients')
-    ingredientsContainer.innerHTML = `
-            <h3 class="recipe__section-title heading--3">Ingredients</h3>
-            <ul class="recipe__ingredients-list"></ul>
-        `
-    recipeContainer.append(ingredientsContainer);
-
-    const ingredientsList = document.querySelector('.recipe__ingredients-list');
-
-    recipe.nutrition.ingredients.forEach(ingredient => {
-        const ingredientItem = document.createElement('li');
-        ingredientItem.classList.add('recipe__ingredient-item');
-        ingredientItem.textContent = ingredient.amount + ' ' + ingredient.unit + ' ' + ingredient.name;
-        ingredientsList.append(ingredientItem);
-    })
-}
-
-
-// get recipe instructions data
-const showInstructions = recipe => {
-    const instructionsContainer = document.createElement('div');
-    instructionsContainer.classList.add('recipe__instructions')
-    instructionsContainer.innerHTML = `
-            <h3 class="recipe__section-title heading--3">Instructions</h3>
-            <ol class="recipe__instructions-list"></ol>
-        `
-    recipeContainer.append(instructionsContainer);
-
-    const instructionsList = document.querySelector('.recipe__instructions-list');
-    recipe.analyzedInstructions[0].steps.forEach(instruction => {
-        const instructionItem = document.createElement('li');
-        instructionItem.classList.add('recipe__instruction-item');
-        instructionItem.textContent = instruction.step;
-        instructionsList.append(instructionItem);
-    })
-}
-
-// fetch recipe taste data
-// GET https://api.spoonacular.com/recipes/{id}/nutritionWidget
-const showTaste = async (recipeId) => {
-    try {
-        const response = await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/tasteWidget`, {
-            params: {
-                apiKey
-            }
-        })
-        // extract html and js from response.data 
-        const tasteResponse = response.data.split(/\<script\>|\<\/script\>/);
-
-        const tasteHtml = tasteResponse[0];
-        const tasteJs = tasteResponse[1];
-
-        const tasteVisual = document.createElement('div');
-        tasteVisual.classList.add('recipe__taste');
-        tasteVisual.innerHTML = `<h3 class="recipe__section-title heading--3">Taste</h3>` + tasteHtml;
-
-        // <script> cannot execute directly in innerHTML
-        const tasteScript = document.createElement('script');
-        tasteScript.text = tasteJs;
-
-        tasteVisual.append(tasteScript)
-        recipeContainer.append(tasteVisual);
-    }
-    catch (err) {
-        console.log('Error:', err.message);
-    }
-}
-
-// search 
-const body = document.querySelector('body');
-const searchBtn = document.querySelector('.search__btn');
-const appHeading = document.querySelector('.app-text__heading');
-const appIntro = document.querySelector('.app-text__intro');
-const searchBlock = document.querySelector('.search');
-const headContainer = document.querySelector('.head-container');
-const searchAdvanced = document.querySelector('.search__advanced');
-
+// trigger search, and change page layout
 searchBtn.addEventListener('click', () => {
     fetchResults();
     addClass(advancedSearchBlock, 'hidden');
-    removeClass(body, 'background-color')
-    addClass(appHeading, 'app-text__heading--navi')
+    removeClass(body, 'background-color');
+    addClass(body, 'body__layout--navi');
+    addClass(appHeading, 'hidden');
     addClass(appIntro, 'hidden');
-    addClass(headContainer, 'head-container--navi')
+    addClass(headContainer, 'head-container--navi');
     addClass(searchBlock, 'search--navi');
     addClass(searchAdvanced, 'search__advanced--navi');
     addClass(searchBtn, 'search__btn--navi');
     addClass(advancedToggle, 'search__advanced-toggle--navi');
-
-
 });
 
-// trigger recipe fetch when users click on links in recipe summary
+// hide icon to hide search results
+hideSearchResults.addEventListener('click', () => {
+    toggleClass(searchResultsContainer, 'hidden');
+    toggleClass(hideIcon, 'hide__icon--expand');
+    toggleClass(resultsContainer, 'results-container--collapse');
+})
+
+// advanced search button to toggle the additional criteria
+advancedToggle.addEventListener('click', () => toggleClass(advancedSearchBlock, 'hidden'));
+
+// toggle min and max icon to show annotation
+annotationIconMin.addEventListener('click', () => toggleClass(annotationMin, 'hidden'));
+annotationIconMax.addEventListener('click', () => toggleClass(annotationMax, 'hidden'));
+
+// close the annotation when clicking outside the box
+document.addEventListener('click', (event) => closeElement(event, searchColumnMin, annotationBoxMin));
+document.addEventListener('click', (event) => closeElement(event, searchColumnMax, annotationBoxMax));
+
+

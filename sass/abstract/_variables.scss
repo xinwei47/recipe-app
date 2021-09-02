@@ -4,6 +4,7 @@ $color-highlight: #bc6c25;
 
 $color-white: #fff;
 $color-black: #000;
+$color-grey: #f3f3f3;
 
 $padding-xxs: 0.5rem;
 $padding-xs: 1rem;
@@ -18,6 +19,7 @@ $margin-sm: 2rem;
 $margin-md: 4rem;
 $margin-lg: 8rem;
 $margin-xl: 12rem;
+$margin-xxl: 14rem;
 
 $box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.25);
 $box-shadow-1: 0 1rem 2rem rgba(0, 0, 0, 0.2);
@@ -33,8 +35,7 @@ $grid-gap-sm: 4rem;
 $grid-gap-md: 6rem;
 $grid-gap-lg: 8rem;
 
-$bp-xxl: 75em; //1200px
-$bp-xl: 68.75em; //1100px
+$bp-xl: 65em; //1040px
 $bp-lg: 62.5em; //1000px
 $bp-md: 50em; //800px
 $bp-sm: 47.5em; //760px

@@ -2,8 +2,6 @@
     line-height: 1.4;
 
     // heading
-    &__heading {
-    }
     &__img-container {
         width: 100%;
     }
@@ -58,9 +56,6 @@
         margin-bottom: $margin-xxs;
     }
 
-    &__ingredients {
-    }
-
     &__section-title {
         margin-top: $margin-md;
         color: $color-primary;
@@ -71,19 +66,15 @@
 
         column-count: 2;
         column-gap: 4rem;
-    }
-    &__ingredient-item {
-    }
-    // instructions
-    &__instructions {
-    }
-    &__instructions-list {
-        margin-top: $margin-sm;
-    }
-    &__instruction-item {
+
+        @media only screen and (max-width: $bp-xxs) {
+            column-count: 1;
+            column-gap: 0rem;
+        }
     }
 
-    // taste
-    &__taste {
+    // instructions
+    &__instructions-list {
+        margin-top: $margin-sm;
     }
 }

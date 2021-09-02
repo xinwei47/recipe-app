@@ -8,17 +8,31 @@
 
 html {
     font-size: 62.5%; // 10px
-    min-height: 100%;
+    width: 100%;
+    height: 100%;
+
+    @media only screen and (max-width: $bp-md) {
+        font-size: 56.25%; //9px
+    }
+
+    @media only screen and (max-width: $bp-xs) {
+        font-size: 50%; //8px
+    }
+
+    @media only screen and (max-width: $bp-xxs) {
+        font-size: 43.75%; // 7px
+    }
 }
 
 body {
     box-sizing: border-box;
-    min-height: 100%;
-    padding: $padding-lg;
+    width: 100%;
+    height: 100%;
+    padding: $padding-lg 2rem;
     background-color: $color-white;
     position: relative;
+}
 
-    &__layout--navi {
-        background-color: $color-white;
-    }
+.body__layout--navi {
+    overflow: hidden;
 }

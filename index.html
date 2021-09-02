@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
         integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
@@ -75,8 +77,15 @@
         </div>
     </div>
 
+
+    <div class="loader hidden"></div>
+
     <!-- display content -->
     <div class="results-container">
+
+        <!-- hide search results column -->
+        <div class="hide hidden"><i class="hide__icon fas fa-chevron-left"></i></div>
+
         <!-- display search results -->
         <div class="search-results"></div>
 
@@ -85,7 +94,11 @@
 
     </div>
 
+
     <script src="apikey.js"></script>
+    <script src="jquery.canvasjs.min.js"></script>
+    <script src="utilities.js"></script>
+    <script src="fetch.js"></script>
     <script type="text/javascript" src="app.js"></script>
 </body>
 
