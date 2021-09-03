@@ -52,7 +52,6 @@
 
 .results-container {
     max-width: 114rem;
-    margin-top: $margin-xxl;
     display: grid;
     grid-template-columns: minmax(0, min-content) minmax(0, 1fr);
 
@@ -63,17 +62,21 @@
             padding: 0;
         }
     }
+
+    &--navi {
+        margin-top: $margin-xxl;
+    }
 }
 
 .search-results {
     padding-right: 1.5rem;
-    max-height: 85vh;
+    max-height: 75vh;
     overflow: scroll;
 }
 
 .recipe {
     padding-left: $padding-sm;
     padding-right: 1.5rem;
-    max-height: 85vh;
+    max-height: 75vh;
     overflow: scroll;
 }

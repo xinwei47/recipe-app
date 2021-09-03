@@ -47,14 +47,6 @@
         object-fit: cover;
     }
 
-    &__title {
-        font-size: 2rem;
-
-        @media only screen and (max-width: $bp-xs) {
-            font-size: 1.6rem;
-        }
-    }
-
     &__nutrition-overview {
         margin-top: 1rem;
         list-style: none;

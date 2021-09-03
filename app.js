@@ -42,7 +42,7 @@ const displayResults = (results) => {
                 <img src="${result.image}" alt="" class="card__img">
             </div>
             <div class="card__content">
-                <h5 class="card__title">${result.title}</h5>
+                <h4 class="card__title heading--4">${result.title}</h4>
                 <ul class="card__nutrition-overview"></ul>
             </div>
         </a>
@@ -73,6 +73,9 @@ const displayResults = (results) => {
 // search result card is clickable to show recipe details
 const recipeDetails = async (recipe) => {
     clearContainer(recipeContainer);
+
+    // scroll recipe section to the top before rendering the recipe content
+    recipeContainer.scrollTo(0, 0);
 
     const recipeHeading = document.createElement('div');
     addClass(recipeHeading, 'recipe__heading');
@@ -120,6 +123,7 @@ searchBtn.addEventListener('click', () => {
     addClass(advancedSearchBlock, 'hidden');
     removeClass(body, 'background-color');
     addClass(body, 'body__layout--navi');
+    addClass(resultsContainer, 'results-container--navi');
     addClass(appHeading, 'hidden');
     addClass(appIntro, 'hidden');
     addClass(headContainer, 'head-container--navi');
