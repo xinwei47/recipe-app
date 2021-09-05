@@ -2,6 +2,7 @@ const body = document.querySelector('body');
 const resultsContainer = document.querySelector('.results-container');
 const searchResultsContainer = document.querySelector('.search-results');
 const recipeContainer = document.querySelector('.recipe');
+const resultsContent = document.querySelector('.results-content');
 const searchBtn = document.querySelector('.search__btn');
 const appHeading = document.querySelector('.app-text__heading');
 const appIntro = document.querySelector('.app-text__intro');
@@ -137,7 +138,7 @@ searchBtn.addEventListener('click', () => {
 hideSearchResults.addEventListener('click', () => {
     toggleClass(searchResultsContainer, 'hidden');
     toggleClass(hideIcon, 'hide__icon--expand');
-    toggleClass(resultsContainer, 'results-container--collapse');
+    toggleClass(resultsContent, 'results-content--collapse');
 })
 
 // advanced search button to toggle the additional criteria

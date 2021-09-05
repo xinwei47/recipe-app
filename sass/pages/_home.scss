@@ -52,6 +52,17 @@
 
 .results-container {
     max-width: 114rem;
+    
+    &--navi {
+        margin-top: $margin-xxl;
+
+        @media only screen and (max-width: $bp-xxs) {
+            margin-top: 10rem;
+        }
+    }
+}
+
+.results-content {
     display: grid;
     grid-template-columns: minmax(0, min-content) minmax(0, 1fr);
 
@@ -62,21 +73,17 @@
             padding: 0;
         }
     }
-
-    &--navi {
-        margin-top: $margin-xxl;
-    }
 }
 
 .search-results {
     padding-right: 1.5rem;
-    max-height: 75vh;
+    max-height: 70vh;
     overflow: scroll;
 }
 
 .recipe {
     padding-left: $padding-sm;
     padding-right: 1.5rem;
-    max-height: 75vh;
+    max-height: 70vh;
     overflow: scroll;
 }
