@@ -1,5 +1,4 @@
 const body = document.querySelector('body');
-const resultsContainer = document.querySelector('.results-container');
 const searchResultsContainer = document.querySelector('.search-results');
 const recipeContainer = document.querySelector('.recipe');
 const resultsContent = document.querySelector('.results-content');
@@ -124,7 +123,6 @@ searchBtn.addEventListener('click', () => {
     addClass(advancedSearchBlock, 'hidden');
     removeClass(body, 'background-color');
     addClass(body, 'body__layout--navi');
-    addClass(resultsContainer, 'results-container--navi');
     addClass(appHeading, 'hidden');
     addClass(appIntro, 'hidden');
     addClass(headContainer, 'head-container--navi');

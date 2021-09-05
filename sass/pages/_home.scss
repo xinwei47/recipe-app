@@ -6,10 +6,6 @@
         display: grid;
         grid-template-columns: max-content 1fr;
         align-items: center;
-
-        position: fixed;
-        top: 0px;
-        left: 0px;
         background-color: yellowgreen;
         padding: $padding-sm $padding-md $padding-xs $padding-md;
     }
@@ -36,10 +32,9 @@
 }
 
 .hide {
-    position: absolute;
-    top: 12rem;
     color: #55a630;
     font-weight: 600;
+    margin: $margin-sm 0 $margin-xs 0;
 
     &__icon {
         font-size: 3rem;
@@ -52,14 +47,8 @@
 
 .results-container {
     max-width: 114rem;
-    
-    &--navi {
-        margin-top: $margin-xxl;
-
-        @media only screen and (max-width: $bp-xxs) {
-            margin-top: 10rem;
-        }
-    }
+    padding: 0 $padding-sm;
+    margin: auto;
 }
 
 .results-content {
@@ -77,13 +66,13 @@
 
 .search-results {
     padding-right: 1.5rem;
-    max-height: 70vh;
+    max-height: 80vh;
     overflow: scroll;
 }
 
 .recipe {
     padding-left: $padding-sm;
     padding-right: 1.5rem;
-    max-height: 70vh;
+    max-height: 80vh;
     overflow: scroll;
 }
