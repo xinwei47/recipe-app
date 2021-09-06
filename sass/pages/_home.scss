@@ -7,7 +7,7 @@
         grid-template-columns: max-content 1fr;
         align-items: center;
         background-color: yellowgreen;
-        padding: $padding-sm $padding-md $padding-xs $padding-md;
+        padding: $padding-sm $padding-sm $padding-xs $padding-sm;
     }
 }
 .app-text {
@@ -33,7 +33,7 @@
 
 .hide {
     color: #55a630;
-    font-weight: 600;
+    font-weight: 400;
     margin: $margin-sm 0 $margin-xs 0;
 
     &__icon {
@@ -48,7 +48,7 @@
 .results-container {
     max-width: 114rem;
     padding: 0 $padding-sm;
-    margin: auto;
+    margin: 0 auto;
 }
 
 .results-content {
